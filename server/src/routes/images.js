@@ -18,8 +18,9 @@ router.get('/list', (req, res) => {
   const filterBookmarked = req.query.bookmarked === 'true';
   const filterTagged = req.query.tagged === 'true';
   const filterUntagged = req.query.untagged === 'true';
+  const filterDescribed = req.query.described === 'true';
 
-  const hasFilters = filterLiked || filterBookmarked || filterTagged || filterUntagged;
+  const hasFilters = filterLiked || filterBookmarked || filterTagged || filterUntagged || filterDescribed;
 
   let allImages = getShuffledImages(seed);
 
@@ -31,7 +32,7 @@ router.get('/list', (req, res) => {
 
       // If no data exists for this image, it fails all positive filters
       if (!imgData) {
-        return filterUntagged && !filterLiked && !filterBookmarked && !filterTagged;
+        return filterUntagged && !filterLiked && !filterBookmarked && !filterTagged && !filterDescribed;
       }
 
       // Check each filter condition (AND logic)
@@ -39,6 +40,7 @@ router.get('/list', (req, res) => {
       if (filterBookmarked && !imgData.bookmarked) return false;
       if (filterTagged && !(imgData.tags && imgData.tags.length > 0)) return false;
       if (filterUntagged && imgData.tags && imgData.tags.length > 0) return false;
+      if (filterDescribed && !imgData.description) return false;
 
       return true;
     });

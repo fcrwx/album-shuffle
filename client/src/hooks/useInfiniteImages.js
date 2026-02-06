@@ -10,7 +10,7 @@ export function useInfiniteImages(sessionSeed, userId, filters = {}, batchSize =
   const loadingRef = useRef(false);
 
   // Extract filter values for stable dependencies
-  const { liked = false, bookmarked = false, tagged = false, untagged = false } = filters;
+  const { liked = false, bookmarked = false, tagged = false, untagged = false, described = false } = filters;
 
   const buildParams = useCallback((offset) => {
     const params = new URLSearchParams({
@@ -23,8 +23,9 @@ export function useInfiniteImages(sessionSeed, userId, filters = {}, batchSize =
     if (bookmarked) params.set('bookmarked', 'true');
     if (tagged) params.set('tagged', 'true');
     if (untagged) params.set('untagged', 'true');
+    if (described) params.set('described', 'true');
     return params;
-  }, [sessionSeed, userId, liked, bookmarked, tagged, untagged, batchSize]);
+  }, [sessionSeed, userId, liked, bookmarked, tagged, untagged, described, batchSize]);
 
   const loadMore = useCallback(async () => {
     if (loadingRef.current || !hasMore) return;

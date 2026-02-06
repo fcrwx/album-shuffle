@@ -24,6 +24,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LabelOffIcon from '@mui/icons-material/LabelOff';
+import NotesIcon from '@mui/icons-material/Notes';
 
 function Header({ appTitle, users, currentUser, onUserChange, onStatsClick, onHomeClick, filters, onFiltersChange, showStats }) {
   const [userDialogOpen, setUserDialogOpen] = useState(false);
@@ -256,10 +257,24 @@ function Header({ appTitle, users, currentUser, onUserChange, onStatsClick, onHo
                 </Box>
               }
             />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={filters?.described || false}
+                  onChange={() => handleFilterChange('described')}
+                />
+              }
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <NotesIcon fontSize="small" color={filters?.described ? 'primary' : 'inherit'} />
+                  Has Description
+                </Box>
+              }
+            />
           </FormGroup>
           {activeFilterCount > 0 && (
             <Button
-              onClick={() => onFiltersChange({ liked: false, bookmarked: false, tagged: false, untagged: false })}
+              onClick={() => onFiltersChange({ liked: false, bookmarked: false, tagged: false, untagged: false, described: false })}
               sx={{ mt: 2 }}
             >
               Clear all filters

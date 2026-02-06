@@ -21,7 +21,7 @@ function App() {
   const [tagUpdates, setTagUpdates] = useState({});
   const [likeUpdates, setLikeUpdates] = useState({});
   const [descriptionUpdates, setDescriptionUpdates] = useState({});
-  const [filters, setFilters] = useState({ liked: false, bookmarked: false, tagged: false, untagged: false });
+  const [filters, setFilters] = useState({ liked: false, bookmarked: false, tagged: false, untagged: false, described: false });
   const savedScrollPosition = useRef(0);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ function App() {
     setTagUpdates({});
     setLikeUpdates({});
     setDescriptionUpdates({});
-    setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false });
+    setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false, described: false });
     window.scrollTo(0, 0);
   }, []);
 
@@ -136,7 +136,7 @@ function App() {
           setTagUpdates({});
           setLikeUpdates({});
           setDescriptionUpdates({});
-          setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false });
+          setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false, described: false });
           window.scrollTo(0, 0);
         }}
         filters={filters}
