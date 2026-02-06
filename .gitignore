@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+*.tmp
+
+# Environment and config
+.env
+config.json
+
+# User data (personal usage history)
+server/data/*.json
+
+# Images directory (your actual collection)
+images/

@@ -1,0 +1,9 @@
+{
+  "appTitle": "Album Shuffle",
+  "users": [
+    { "id": "user1", "displayName": "User 1" },
+    { "id": "user2", "displayName": "User 2" }
+  ],
+  "server": { "port": 3000 },
+  "feed": { "batchSize": 10 }
+}
