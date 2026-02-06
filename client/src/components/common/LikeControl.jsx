@@ -14,7 +14,7 @@ function LikeControl({ likes, onLike, onUnlike, size = 'medium' }) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <IconButton size="small" onClick={onUnlike} disabled={likes === 0} sx={{ p: 0.5 }}>
+      <IconButton size="small" onClick={onUnlike} onMouseDown={(e) => e.preventDefault()} disabled={likes === 0} sx={{ p: 0.5 }}>
         <RemoveIcon sx={{ fontSize: s.button }} />
       </IconButton>
       <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 0.5, width: s.box, height: s.box }}>
@@ -32,7 +32,7 @@ function LikeControl({ likes, onLike, onUnlike, size = 'medium' }) {
           {likes}
         </Typography>
       </Box>
-      <IconButton size="small" onClick={onLike} disabled={likes >= 9} sx={{ p: 0.5 }}>
+      <IconButton size="small" onClick={onLike} onMouseDown={(e) => e.preventDefault()} disabled={likes >= 9} sx={{ p: 0.5 }}>
         <AddIcon sx={{ fontSize: s.button }} />
       </IconButton>
     </Box>
