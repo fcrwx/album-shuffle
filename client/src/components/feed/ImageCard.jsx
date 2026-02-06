@@ -13,7 +13,8 @@ function ImageCard({
   onDescriptionClick,
   createObserverCallback,
   updatedTags,
-  updatedLikes
+  updatedLikes,
+  updatedDescription
 }) {
   const [imageData, setImageData] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -39,6 +40,13 @@ function ImageCard({
       setImageData(prev => ({ ...prev, likes: updatedLikes }));
     }
   }, [updatedLikes]);
+
+  // Update local imageData when description is updated externally
+  useEffect(() => {
+    if (updatedDescription !== undefined && imageData) {
+      setImageData(prev => ({ ...prev, description: updatedDescription }));
+    }
+  }, [updatedDescription]);
 
   useEffect(() => {
     const img = imgRef.current;

@@ -20,6 +20,7 @@ function App() {
   const [descDialog, setDescDialog] = useState({ open: false, filename: null });
   const [tagUpdates, setTagUpdates] = useState({});
   const [likeUpdates, setLikeUpdates] = useState({});
+  const [descriptionUpdates, setDescriptionUpdates] = useState({});
   const [filters, setFilters] = useState({ liked: false, bookmarked: false, tagged: false, untagged: false });
   const savedScrollPosition = useRef(0);
 
@@ -48,6 +49,7 @@ function App() {
     setShowStats(false);
     setTagUpdates({});
     setLikeUpdates({});
+    setDescriptionUpdates({});
     setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false });
     window.scrollTo(0, 0);
   }, []);
@@ -92,6 +94,15 @@ function App() {
     setLikeUpdates(prev => ({ ...prev, [filename]: likes }));
   }, [viewerImage]);
 
+  const handleDescriptionUpdated = useCallback((filename, description) => {
+    // Update viewerImage if it's the same file
+    if (viewerImage && viewerImage.filename === filename) {
+      setViewerImage(prev => ({ ...prev, description }));
+    }
+    // Track description updates for Feed's ImageCards
+    setDescriptionUpdates(prev => ({ ...prev, [filename]: description }));
+  }, [viewerImage]);
+
   const openDescDialog = useCallback((filename) => {
     setDescDialog({ open: true, filename });
   }, []);
@@ -124,6 +135,7 @@ function App() {
           setSessionSeed(Date.now());
           setTagUpdates({});
           setLikeUpdates({});
+          setDescriptionUpdates({});
           setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false });
           window.scrollTo(0, 0);
         }}
@@ -155,6 +167,7 @@ function App() {
           onDescriptionClick={openDescDialog}
           tagUpdates={tagUpdates}
           likeUpdates={likeUpdates}
+          descriptionUpdates={descriptionUpdates}
           filters={filters}
         />
       </Box>
@@ -185,6 +198,7 @@ function App() {
           userId={currentUser.id}
           filename={descDialog.filename}
           onClose={closeDescDialog}
+          onDescriptionUpdated={handleDescriptionUpdated}
         />
       )}
     </Box>

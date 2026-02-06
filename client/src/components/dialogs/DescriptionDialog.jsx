@@ -21,7 +21,7 @@ function DraggablePaper(props) {
   );
 }
 
-function DescriptionDialog({ userId, filename, onClose }) {
+function DescriptionDialog({ userId, filename, onClose, onDescriptionUpdated }) {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +45,7 @@ function DescriptionDialog({ userId, filename, onClose }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description })
       });
+      if (onDescriptionUpdated) onDescriptionUpdated(filename, description);
       onClose();
     } catch (err) {
       console.error('Failed to save description:', err);
