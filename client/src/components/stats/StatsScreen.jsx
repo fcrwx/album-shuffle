@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, LayoutGroup } from 'framer-motion';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -426,41 +427,49 @@ function StatsScreen({ userId, onClose, onImageClick, tagUpdates }) {
     }
 
     return (
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-          gap: 2,
-        }}
-      >
-        {images.map((img) => (
-          <Card
-            key={img.filename}
-            sx={{
-              cursor: 'pointer',
-              '&:hover': { transform: 'scale(1.02)', transition: 'transform 0.2s' }
-            }}
-            onClick={() => onImageClick(img.filename, img)}
-          >
-            <Box sx={{ position: 'relative' }}>
-              <CardMedia
-                component="img"
-                image={`/api/images/file/${encodeURIComponent(img.filename)}`}
-                alt=""
-                sx={{ aspectRatio: '1', objectFit: 'cover' }}
-              />
-              {renderLikeControl(img)}
-            </Box>
-            <CardContent sx={{ py: 1, px: 1.5, '&:last-child': { pb: 1 } }}>
-              <Typography variant="body2" color="text.secondary">
-                {activeTab === 0 && `${img.likes} likes`}
-                {activeTab === 1 && `${img.viewCount} views`}
-                {activeTab === 2 && <BookmarkIcon fontSize="small" color="primary" />}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
+      <LayoutGroup>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+            gap: 2,
+          }}
+        >
+          {images.map((img) => (
+            <motion.div
+              key={img.filename}
+              layout
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            >
+              <Card
+                sx={{
+                  cursor: 'pointer',
+                  height: '100%',
+                  '&:hover': { transform: 'scale(1.02)', transition: 'transform 0.2s' }
+                }}
+                onClick={() => onImageClick(img.filename, img)}
+              >
+                <Box sx={{ position: 'relative' }}>
+                  <CardMedia
+                    component="img"
+                    image={`/api/images/file/${encodeURIComponent(img.filename)}`}
+                    alt=""
+                    sx={{ aspectRatio: '1', objectFit: 'cover' }}
+                  />
+                  {renderLikeControl(img)}
+                </Box>
+                <CardContent sx={{ py: 1, px: 1.5, '&:last-child': { pb: 1 } }}>
+                  <Typography variant="body2" color="text.secondary">
+                    {activeTab === 0 && `${img.likes} likes`}
+                    {activeTab === 1 && `${img.viewCount} views`}
+                    {activeTab === 2 && <BookmarkIcon fontSize="small" color="primary" />}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </Box>
+      </LayoutGroup>
     );
   };
 
