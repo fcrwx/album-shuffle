@@ -7,7 +7,7 @@ import useInfiniteImages from '../../hooks/useInfiniteImages';
 import useViewTracking from '../../hooks/useViewTracking';
 import ImageCard from './ImageCard';
 
-function Feed({ userId, sessionSeed, onImageClick, onTagsClick, onDescriptionClick, tagUpdates, filters }) {
+function Feed({ userId, sessionSeed, onImageClick, onTagsClick, onDescriptionClick, tagUpdates, likeUpdates, filters }) {
   const { images, loading, hasMore, error, loadMore, totalFiltered } = useInfiniteImages(sessionSeed, userId, filters);
   const { createObserverCallback } = useViewTracking(userId);
   const loaderRef = useRef(null);
@@ -42,6 +42,7 @@ function Feed({ userId, sessionSeed, onImageClick, onTagsClick, onDescriptionCli
             onDescriptionClick={onDescriptionClick}
             createObserverCallback={createObserverCallback}
             updatedTags={tagUpdates?.[filename]}
+            updatedLikes={likeUpdates?.[filename]}
           />
         ))}
 

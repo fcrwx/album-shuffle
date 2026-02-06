@@ -15,7 +15,7 @@ import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LikeControl from '../common/LikeControl';
 
-function TagsDialog({ userId, filename, onClose, onTagsUpdated }) {
+function TagsDialog({ userId, filename, onClose, onTagsUpdated, onLikesUpdated }) {
   const [allTags, setAllTags] = useState([]);  // Array of { name, lastUsed }
   const [selectedTags, setSelectedTags] = useState([]);
   const [likes, setLikes] = useState(0);
@@ -51,6 +51,7 @@ function TagsDialog({ userId, filename, onClose, onTagsUpdated }) {
       });
       const data = await res.json();
       setLikes(data.likes);
+      if (onLikesUpdated) onLikesUpdated(filename, data.likes);
     } catch (err) {
       console.error('Failed to like:', err);
     }
@@ -63,6 +64,7 @@ function TagsDialog({ userId, filename, onClose, onTagsUpdated }) {
       });
       const data = await res.json();
       setLikes(data.likes);
+      if (onLikesUpdated) onLikesUpdated(filename, data.likes);
     } catch (err) {
       console.error('Failed to unlike:', err);
     }

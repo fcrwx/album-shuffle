@@ -19,6 +19,7 @@ function App() {
   const [tagsDialog, setTagsDialog] = useState({ open: false, filename: null });
   const [descDialog, setDescDialog] = useState({ open: false, filename: null });
   const [tagUpdates, setTagUpdates] = useState({});
+  const [likeUpdates, setLikeUpdates] = useState({});
   const [filters, setFilters] = useState({ liked: false, bookmarked: false, tagged: false, untagged: false });
   const savedScrollPosition = useRef(0);
 
@@ -46,6 +47,7 @@ function App() {
     setSessionSeed(Date.now());
     setShowStats(false);
     setTagUpdates({});
+    setLikeUpdates({});
     setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false });
     window.scrollTo(0, 0);
   }, []);
@@ -81,6 +83,15 @@ function App() {
     setTagUpdates(prev => ({ ...prev, [filename]: tags }));
   }, [viewerImage]);
 
+  const handleLikesUpdated = useCallback((filename, likes) => {
+    // Update viewerImage if it's the same file
+    if (viewerImage && viewerImage.filename === filename) {
+      setViewerImage(prev => ({ ...prev, likes }));
+    }
+    // Track like updates for Feed's ImageCards
+    setLikeUpdates(prev => ({ ...prev, [filename]: likes }));
+  }, [viewerImage]);
+
   const openDescDialog = useCallback((filename) => {
     setDescDialog({ open: true, filename });
   }, []);
@@ -112,6 +123,7 @@ function App() {
           setShowStats(false);
           setSessionSeed(Date.now());
           setTagUpdates({});
+          setLikeUpdates({});
           setFilters({ liked: false, bookmarked: false, tagged: false, untagged: false });
           window.scrollTo(0, 0);
         }}
@@ -142,6 +154,7 @@ function App() {
           onTagsClick={openTagsDialog}
           onDescriptionClick={openDescDialog}
           tagUpdates={tagUpdates}
+          likeUpdates={likeUpdates}
           filters={filters}
         />
       </Box>
@@ -163,6 +176,7 @@ function App() {
           filename={tagsDialog.filename}
           onClose={closeTagsDialog}
           onTagsUpdated={handleTagsUpdated}
+          onLikesUpdated={handleLikesUpdated}
         />
       )}
 
