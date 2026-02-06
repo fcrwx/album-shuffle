@@ -43,10 +43,11 @@ Edit `config.json` to set your app title and users:
 }
 ```
 
-Edit `docker/.env` to point to your images directory:
+Edit `docker/.env` to set your paths:
 
 ```
 IMAGES_PATH=/path/to/your/images
+DATA_PATH=/path/to/album-shuffle/server/data
 ```
 
 ### 2. Run with Docker
