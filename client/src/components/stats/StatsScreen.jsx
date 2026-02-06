@@ -182,9 +182,13 @@ function StatsScreen({ userId, onClose, onImageClick, tagUpdates }) {
         method: 'POST'
       });
       const data = await res.json();
-      setImages(prev => prev.map(img =>
-        img.filename === filename ? { ...img, likes: data.likes } : img
-      ));
+      setImages(prev => {
+        const updated = prev.map(img =>
+          img.filename === filename ? { ...img, likes: data.likes } : img
+        );
+        // Re-sort by likes on Most Liked tab
+        return activeTab === 0 ? updated.sort((a, b) => b.likes - a.likes) : updated;
+      });
       setAllTaggedImages(prev => prev.map(img =>
         img.filename === filename ? { ...img, likes: data.likes } : img
       ));
@@ -199,9 +203,13 @@ function StatsScreen({ userId, onClose, onImageClick, tagUpdates }) {
         method: 'POST'
       });
       const data = await res.json();
-      setImages(prev => prev.map(img =>
-        img.filename === filename ? { ...img, likes: data.likes } : img
-      ));
+      setImages(prev => {
+        const updated = prev.map(img =>
+          img.filename === filename ? { ...img, likes: data.likes } : img
+        );
+        // Re-sort by likes on Most Liked tab
+        return activeTab === 0 ? updated.sort((a, b) => b.likes - a.likes) : updated;
+      });
       setAllTaggedImages(prev => prev.map(img =>
         img.filename === filename ? { ...img, likes: data.likes } : img
       ));
