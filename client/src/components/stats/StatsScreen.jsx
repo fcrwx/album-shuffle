@@ -14,6 +14,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import LikeControl from '../common/LikeControl';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
