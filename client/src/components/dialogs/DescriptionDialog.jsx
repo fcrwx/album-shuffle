@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,8 +7,19 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close';
+import Draggable from 'react-draggable';
+
+function DraggablePaper(props) {
+  const nodeRef = useRef(null);
+  return (
+    <Draggable nodeRef={nodeRef} handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper ref={nodeRef} {...props} />
+    </Draggable>
+  );
+}
 
 function DescriptionDialog({ userId, filename, onClose }) {
   const [description, setDescription] = useState('');
@@ -46,11 +57,12 @@ function DescriptionDialog({ userId, filename, onClose }) {
       onClose={onClose}
       maxWidth="sm"
       fullWidth
+      PaperComponent={DraggablePaper}
       PaperProps={{
         sx: { bgcolor: 'background.paper' }
       }}
     >
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <DialogTitle id="draggable-dialog-title" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'move' }}>
         Description
         <IconButton onClick={onClose} size="small">
           <CloseIcon />
