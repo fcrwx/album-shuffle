@@ -53,7 +53,7 @@ IMAGES_PATH=/path/to/your/images
 
 ```bash
 cd docker
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 Access at http://localhost:3000
