@@ -293,9 +293,20 @@ function TagsDialog({ userId, filename, onClose, onTagsUpdated }) {
               </Box>
 
               {suggestion && (
-                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, mt: -1 }}>
-                  <strong>Tab</strong> to add "{suggestion}" or <strong>Enter</strong> for "{inputValue}"
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt: -1 }}>
+                  <Chip
+                    label={suggestion}
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => handleAddTag(suggestion)}
+                    onMouseDown={(e) => e.preventDefault()}
+                    sx={{ cursor: 'pointer' }}
+                  />
+                  <Typography variant="caption" color="text.secondary">
+                    Tap or press Tab
+                  </Typography>
+                </Box>
               )}
 
               {selectedTags.length > 0 && (
