@@ -15,7 +15,7 @@ try {
 
 export const appTitle = config.appTitle || 'Album Shuffle';
 export const users = config.users;
-export const serverPort = config.server?.port || 3000;
+export const serverPort = config.server?.port || 8888;
 export const feedBatchSize = config.feed?.batchSize || 10;
 export const imagesDir = process.env.IMAGES_DIR || join(__dirname, '../../images');
 export const dataDir = join(__dirname, '../data');

@@ -1,11 +1,11 @@
 services:
-  pnc:
+  album-shuffle:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: pnc
+    container_name: album-shuffle
     ports:
-      - "3000:3000"
+      - "8888:8888"
     volumes:
       # Mount images directory (path configured in .env file)
       - ${IMAGES_PATH}:/images:ro

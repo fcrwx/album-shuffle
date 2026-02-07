@@ -38,7 +38,7 @@ Edit `config.json` to set your app title and users:
   "users": [
     { "id": "user1", "displayName": "User 1" }
   ],
-  "server": { "port": 3000 },
+  "server": { "port": 8888 },
   "feed": { "batchSize": 10 }
 }
 ```
@@ -57,7 +57,7 @@ cd docker
 docker compose up --build -d
 ```
 
-Access at http://localhost:3000
+Access at http://localhost:8888
 
 ### 3. Run for Development
 
