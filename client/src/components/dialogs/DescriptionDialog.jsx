@@ -63,7 +63,7 @@ function DescriptionDialog({ userId, filename, onClose, onDescriptionUpdated }) 
         sx: { bgcolor: 'background.paper' }
       }}
     >
-      <DialogTitle id="draggable-dialog-title" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'move' }}>
+      <DialogTitle id="draggable-dialog-title" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'grab', '&:active': { cursor: 'grabbing' } }}>
         Description
         <IconButton onClick={onClose} size="small">
           <CloseIcon />
