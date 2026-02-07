@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: album-shuffle
     ports:
-      - "8888:8888"
+      - "8888:3000"
     volumes:
       # Mount images directory (path configured in .env file)
       - ${IMAGES_PATH}:/images:ro
