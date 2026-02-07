@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
@@ -14,6 +14,18 @@ import NotesIcon from '@mui/icons-material/Notes';
 
 function FullscreenViewer({ filename, userId, onClose, onTagsClick, onDescriptionClick, tags }) {
   const [imageData, setImageData] = useState(null);
+  const transformRef = useRef(null);
+
+  const handleDoubleClick = useCallback(() => {
+    const ref = transformRef.current;
+    if (!ref) return;
+    const scale = ref.instance.transformState.scale;
+    if (Math.abs(scale - 1) < 0.01) {
+      ref.centerView(3, 200, 'easeOut');
+    } else {
+      ref.resetTransform(200, 'easeOut');
+    }
+  }, []);
 
   useEffect(() => {
     fetch(`/api/users/${userId}/image/${encodeURIComponent(filename)}`)
@@ -100,13 +112,14 @@ function FullscreenViewer({ filename, userId, onClose, onTagsClick, onDescriptio
         }}
       >
         <TransformWrapper
+          ref={transformRef}
           initialScale={1}
           minScale={0.5}
           maxScale={50}
           centerOnInit={true}
           wheel={{ step: 3, smoothStep: 0.02 }}
           pinch={{ step: 50 }}
-          doubleClick={{ mode: 'zoomIn', step: 5 }}
+          doubleClick={{ disabled: true }}
         >
           <TransformComponent
             wrapperStyle={{ width: '100%', height: '100%' }}
@@ -117,6 +130,7 @@ function FullscreenViewer({ filename, userId, onClose, onTagsClick, onDescriptio
               justifyContent: 'center',
               alignItems: 'center'
             }}
+            contentProps={{ onDoubleClick: handleDoubleClick }}
           >
             <img
               src={`/api/images/file/${encodeURIComponent(filename)}`}
