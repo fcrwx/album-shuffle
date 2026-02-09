@@ -16,6 +16,32 @@ function FullscreenViewer({ filename, userId, onClose, onTagsClick, onDescriptio
   const [imageData, setImageData] = useState(null);
   const transformRef = useRef(null);
 
+  const touchStartRef = useRef(null);
+
+  const handlePointerDown = useCallback((e) => {
+    touchStartRef.current = { y: e.clientY, time: Date.now() };
+  }, []);
+
+  useEffect(() => {
+    const handlePointerUp = (e) => {
+      if (!touchStartRef.current) return;
+      const dy = e.clientY - touchStartRef.current.y;
+      const dt = Date.now() - touchStartRef.current.time;
+      touchStartRef.current = null;
+
+      const ref = transformRef.current;
+      if (!ref) return;
+      const scale = ref.instance.transformState.scale;
+      if (Math.abs(scale - 1) >= 0.01) return;
+
+      if (dy > 100 && dt < 400) {
+        onClose();
+      }
+    };
+    window.addEventListener('pointerup', handlePointerUp);
+    return () => window.removeEventListener('pointerup', handlePointerUp);
+  }, [onClose]);
+
   const handleDoubleClick = useCallback(() => {
     const ref = transformRef.current;
     if (!ref) return;
@@ -103,6 +129,7 @@ function FullscreenViewer({ filename, userId, onClose, onTagsClick, onDescriptio
       </IconButton>
 
       <Box
+        onPointerDownCapture={handlePointerDown}
         sx={{
           width: '100%',
           height: '100%',
