@@ -61,11 +61,15 @@ function App() {
   }, []);
 
   const openFullscreen = useCallback((filename, imageData) => {
+    savedScrollPosition.current = window.scrollY;
     setViewerImage({ filename, ...imageData });
   }, []);
 
   const closeFullscreen = useCallback(() => {
     setViewerImage(null);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, savedScrollPosition.current);
+    });
   }, []);
 
   const openTagsDialog = useCallback((filename) => {
